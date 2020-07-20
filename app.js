@@ -10,13 +10,14 @@ const cors = require("cors");
 //My routes
 const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/user");
+const categoryRoutes=require("./routes/category");
 
 //DB Connection
 mongoose
   .connect(process.env.DATABASE, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useCreateIndex: true
+    useCreateIndex: true  
   })
   .then(() => {
     console.log("DB CONNECTED");
@@ -27,9 +28,10 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(cors());
 
-//My Routes
+//My Routes uses
 app.use("/api", authRoutes);
 app.use("/api", userRoutes);
+app.use("/api",categoryRoutes);
 
 //PORT
 const port = process.env.PORT || 8000;

@@ -5,7 +5,6 @@ var expressJwt = require("express-jwt");
 
 exports.signup = (req, res) => {
   const errors = validationResult(req);
-
   if (!errors.isEmpty()) {
     return res.status(422).json({
       error: errors.array()[0].msg
@@ -43,7 +42,6 @@ exports.signin = (req, res) => {
         error: "USER email does not exists"
       });
     }
-
     if (!user.autheticate(password)) {
       return res.status(401).json({
         error: "Email and password do not match"
