@@ -2,6 +2,8 @@ var mongoose = require("mongoose");
 const crypto = require("crypto");
 const uuidv1 = require("uuid/v1");
 
+const { ObjectId } = mongoose.Schema;
+
 var userSchema = new mongoose.Schema(
   {
     name: {
@@ -10,15 +12,20 @@ var userSchema = new mongoose.Schema(
       maxlength: 32,
       trim: true
     },
-    lastName: {
-      type: String,
-      maxlength: 32,
-      trim: true
-    },
     email: {
       type: String,
       trim: true,
       required: true,
+      unique: true
+    },
+    emailVerified:{
+       type:Boolean,
+       default:false
+    },
+    phoneNo:{
+      type: String,
+      trim: true,
+      required:true,
       unique: true
     },
     userinfo: {
@@ -31,12 +38,23 @@ var userSchema = new mongoose.Schema(
     },
     salt: String,
     role: {
-      type: Number,
-      default: 0
+      type: String,
+      enum:['user','admin'],
+      default: 'user'
     },
     purchases: {
       type: Array,
       default: []
+    },
+    address:[{
+      type:ObjectId,
+      ref:'Location'
+    }],
+    occupication:{
+      type:[String],
+      enum:['labour', 'painter', 'construction-worker', 'plumber',
+       'electrication', 'cleaner', 'mechanic'],
+      default: 'labour'
     }
   },
   { timestamps: true }

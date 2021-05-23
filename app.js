@@ -13,17 +13,9 @@ const userRoutes = require("./routes/user");
 const categoryRoutes=require("./routes/category");
 const productRoutes=require("./routes/product");
 const orderRoutes=require("./routes/order");
+const connectDB = require("./dbConnection");
 
-//DB Connection
-mongoose
-  .connect(process.env.DATABASE, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true  
-  })
-  .then(() => {
-    console.log("DB CONNECTED");
-  });
+
 
 //Middlewares
 app.use(bodyParser.json());
@@ -41,6 +33,7 @@ app.use("/api",orderRoutes);
 //PORT
 const port = process.env.PORT || 8000;
 
+connectDB();
 //Starting a server
 app.listen(port, () => {
   console.log(`app is running at ${port}`);
